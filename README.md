@@ -1,3 +1,9 @@
+# About this Fork
+
+This is a fork of https://github.com/janjagusch/youtube-to-anki that adds some additional functionality like screenshots, and buffering the audio files.
+
+I might add getting a secondary language transcript and setting default languages.
+
 # youtube-to-anki
 
 Converts a YouTube video into Anki Cards.
