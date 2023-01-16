@@ -36,18 +36,21 @@ def make_package(
 )
 @click.option(
     "--transcript-language",
+    "-L",
     default="en",
     help="Which transcript language to use. Defaults to 'en'.",
 )
 @click.option(
     "--buffer-ms",
+    "-B",
     default=100,
     help="Audio buffer (ms) before and after subtitle timing, to prevent cutoff. Defaults to 100.",
 )
 @click.option(
     "--resolution",
+    "-R",
     default=360,
-    help="Video resolution (p). Defaults to .",
+    help="Video resolution (p). Defaults to 360.",
 )
 @click.argument("video-id")
 def main(
