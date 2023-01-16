@@ -28,7 +28,7 @@ _MODEL = Model(
         {
             "name": "Card 1",
             "qfmt": "{{Screenshot}}<br>{{TL-Audio}}",
-            "afmt": '{{FrontSide}}<hr id="answer">{{NL-Transcript}}',
+            "afmt": '{{FrontSide}}{{TL-Audio}}<hr id="answer">{{NL-Transcript}}',
         },
     ],
     css=style
