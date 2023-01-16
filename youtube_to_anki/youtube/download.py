@@ -28,12 +28,12 @@ def _download_audio(url: str, filepath: str):
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
-def _download_video(url: str, filepath: str):
+def _download_video(url: str, filepath: str, resolution: int):
     """
     Downloads the worst video from a YouTube url into a file path.
     """
     ydl_opts = {
-        "format": "worstvideo/worst",
+        "format": f"bestvideo[height<={resolution}]",
         "outtmpl": filepath,
     }
     with YoutubeDL(ydl_opts) as ydl:
@@ -48,11 +48,11 @@ def retrieve_audio(url: str) -> AudioSegment:
         _download_audio(url, f"{tempdir}/temp.%(ext)s")
         return AudioSegment.from_mp3(f"{tempdir}/temp.mp3")
 
-def retrieve_video(url: str) -> cv2.VideoCapture:
+def retrieve_video(url: str, resolution: int) -> cv2.VideoCapture:
     """
     Downloads audio from YouTube URL and returns it as AudioSegment.
     """
     with TemporaryDirectory() as tempdir:
         path = f"{tempdir}/temp.mp4"
-        _download_video(url, path)
+        _download_video(url, path, resolution)
         return cv2.VideoCapture(path)

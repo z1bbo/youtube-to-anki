@@ -44,11 +44,17 @@ def make_package(
     default=100,
     help="Audio buffer (ms) before and after subtitle timing, to prevent cutoff. Defaults to 100.",
 )
+@click.option(
+    "--resolution",
+    default=360,
+    help="Video resolution (p). Defaults to .",
+)
 @click.argument("video-id")
 def main(
     video_id: str,
     transcript_language: str,
     buffer_ms: int,
+    resolution: int,
     out: str,
 ):
     """
@@ -56,7 +62,7 @@ def main(
     """
     url = f"https://www.youtube.com/watch?v={video_id}"
     transcript = retrieve_transcript(video_id, transcript_language)
-    video = retrieve_video(url)
+    video = retrieve_video(url, resolution)
     audio = retrieve_audio(url)
     deck_name = retrieve_info(video_id)
     out = out or f"{deck_name}.apkg"
