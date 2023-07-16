@@ -43,8 +43,8 @@ def make_package(
 @click.option(
     "--buffer-ms",
     "-B",
-    default=100,
-    help="Audio buffer (ms) before and after subtitle timing, to prevent cutoff. Defaults to 100.",
+    default=0,
+    help="Audio buffer (ms) before and after subtitle timing, to prevent cutoff. Defaults to 0.",
 )
 @click.option(
     "--resolution",
