@@ -26,6 +26,7 @@ def _download_audio(url: str, filepath: str):
         "outtmpl": filepath,
     }
     with YoutubeDL(ydl_opts) as ydl:
+        ydl.cache.remove()
         ydl.download([url])
 
 def _download_video(url: str, filepath: str, resolution: int):
@@ -37,6 +38,7 @@ def _download_video(url: str, filepath: str, resolution: int):
         "outtmpl": filepath,
     }
     with YoutubeDL(ydl_opts) as ydl:
+        ydl.cache.remove()
         ydl.download([url])
 
 
