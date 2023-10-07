@@ -18,7 +18,7 @@ opencv_python = "^4.7.0.68"
 [tool.poetry.dev-dependencies]
 black = "^22.12"
 pylint = "^2.7"
-mypy = "0.812"
+mypy = "^1.5.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
