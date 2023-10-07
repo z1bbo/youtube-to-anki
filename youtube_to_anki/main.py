@@ -47,17 +47,17 @@ def make_package(
     help="Audio buffer (ms) before and after subtitle timing, to prevent cutoff. Defaults to 0.",
 )
 @click.option(
-    "--resolution",
+    "--screenshot-resolution",
     "-R",
-    default=360,
-    help="Video resolution (p). Defaults to 360.",
+    default=-1,
+    help="Experimental. Adds screenshots with the specified resolution in pixel height, e.g. 360. Defaults to no screenshots being taken.",
 )
 @click.argument("video-id")
 def main(
     video_id: str,
     transcript_language: str,
     buffer_ms: int,
-    resolution: int,
+    screenshot_resolution: int,
     out: str,
 ):
     """
@@ -65,7 +65,7 @@ def main(
     """
     url = f"https://www.youtube.com/watch?v={video_id}"
     transcript = retrieve_transcript(video_id, transcript_language)
-    video = retrieve_video(url, resolution)
+    video = retrieve_video(url, screenshot_resolution)
     audio = retrieve_audio(url)
     deck_name = retrieve_info(video_id)
     out = out or f"{deck_name}.apkg"
