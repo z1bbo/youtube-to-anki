@@ -14,7 +14,8 @@ from youtube_to_anki.youtube import retrieve_audio, retrieve_video, retrieve_inf
 
 
 def make_package(
-    transcript: Iterable[Dict], audio: AudioSegment, video: cv2.VideoCapture, deck_name: str, filepath: str, buffer_ms: int
+        transcript: Iterable[Dict], audio: AudioSegment, video: cv2.VideoCapture, deck_name: str, filepath: str,
+        buffer_before_ms: int, buffer_after_ms: int
 ):
     """
     Creates an Anki package from audio and transcript.
@@ -22,7 +23,7 @@ def make_package(
     transcript_chunks = tuple(process_transcript_chunk(chunk) for chunk in transcript)
     screenshots = take_screenshots(video, transcript_chunks)
     audio_chunks = tuple(
-        process_audio_chunk(audio, chunk, buffer_ms) for chunk in transcript_chunks
+        process_audio_chunk(audio, chunk, buffer_before_ms, buffer_after_ms) for chunk in transcript_chunks
     )
     _make_package(audio_chunks, screenshots, transcript_chunks, deck_name, hash(deck_name), filepath)
 
@@ -41,24 +42,31 @@ def make_package(
     help="Which transcript language to use. Defaults to 'en'.",
 )
 @click.option(
-    "--buffer-ms",
+    "--buffer-before-ms",
     "-B",
     default=0,
-    help="Audio buffer (ms) before and after subtitle timing, to prevent cutoff. Defaults to 0.",
+    help="Audio buffer (ms) before subtitle timing, to prevent cutoff. Defaults to 0.",
+)
+@click.option(
+    "--buffer-after-ms",
+    "-A",
+    default=0,
+    help="Audio buffer (ms) after subtitle timing, to prevent cutoff. Defaults to 0.",
 )
 @click.option(
     "--screenshot-resolution",
     "-R",
-    default=-1,
-    help="Experimental. Adds screenshots with the specified resolution in pixel height, e.g. 360. Defaults to no screenshots being taken.",
+    default=360,
+    help="Adds screenshots with the specified resolution in pixel height, e.g. 360. Defaults to 360p.",
 )
 @click.argument("video-id")
 def main(
-    video_id: str,
-    transcript_language: str,
-    buffer_ms: int,
-    screenshot_resolution: int,
-    out: str,
+        video_id: str,
+        transcript_language: str,
+        buffer_before_ms: int,
+        buffer_after_ms: int,
+        screenshot_resolution: int,
+        out: str,
 ):
     """
     Converts a YouTube video into an Anki deck.
@@ -69,7 +77,7 @@ def main(
     audio = retrieve_audio(url)
     deck_name = retrieve_info(video_id)
     out = out or f"{deck_name}.apkg"
-    make_package(transcript, audio, video, deck_name, out, buffer_ms)
+    make_package(transcript, audio, video, deck_name, out, buffer_before_ms, buffer_after_ms)
 
 
 if __name__ == "__main__":

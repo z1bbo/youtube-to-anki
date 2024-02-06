@@ -21,11 +21,11 @@ def process_transcript_chunk(chunk: Dict) -> Dict:
     }
 
 
-def process_audio_chunk(audio: AudioSegment, chunk: Dict, buffer_ms: int) -> AudioSegment:
+def process_audio_chunk(audio: AudioSegment, chunk: Dict, buffer_before_ms: int, buffer_after_ms: int) -> AudioSegment:
     """
     Indexes an audio segment by the start and end timestamp provided in the transcript chunk.
     """
-    return audio[max(0, chunk["start"] - buffer_ms) : chunk["end"] + buffer_ms]
+    return audio[max(0, chunk["start"] - buffer_before_ms) : chunk["end"] + buffer_after_ms]
 
 def take_screenshots(video: cv2.VideoCapture, chunks: Tuple[Dict]) -> Iterable[ndarray]:
     """
