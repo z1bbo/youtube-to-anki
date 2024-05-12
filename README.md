@@ -54,6 +54,18 @@ youtube-to-anki produces an `.apkg` file, which can easily be imported into Anki
 
 youtube-to-anki calls [youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api) for requesting the video transcripts. If you're unsure what value to provide to the `--transcript-language` option, you can list all available languages with `youtube_transcript_api --list-transcripts <video_id>`.
 
+## Local development
+Create a venv folder in root, tell poetry to use it & install dependencies
+```bash
+python -m venv .venv
+. .venv/bin/activate
+poetry install
+```
+then you can run the script locally
+```bash
+python3 -m youtube_to_anki.main 0LIKGzlXoqo -L zh-TW -B 300
+```
+
 ## Good Example Videos
 
 - 🇯🇵: [Yuzuhiko's Cat Hands EP 280 | Atashin'chi](https://www.youtube.com/watch?v=Uw6ONSGyWZ4)
